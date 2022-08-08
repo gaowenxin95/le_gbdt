@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>梯度提升算法对比</title>
+  <meta name="description" content="梯度提升算法对比" />
+  <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="梯度提升算法对比" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="梯度提升算法对比" />
+  
+  
+  
+
+<meta name="author" content="高文欣" />
+
+
+<meta name="date" content="2022-08-08" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+
+<script src="libs/header-attrs-2.2/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path=""><a href="#梯度提升算法对比总结"><i class="fa fa-check"></i><b>1</b> 梯度提升算法对比总结</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path=""><a href="#gbdt"><i class="fa fa-check"></i><b>1.1</b> GBDT</a></li>
+<li class="chapter" data-level="1.2" data-path=""><a href="#xgboost"><i class="fa fa-check"></i><b>1.2</b> XGBOOST</a></li>
+<li class="chapter" data-level="1.3" data-path=""><a href="#lightgbm"><i class="fa fa-check"></i><b>1.3</b> LightGBM</a></li>
+<li class="chapter" data-level="1.4" data-path=""><a href="#catboost"><i class="fa fa-check"></i><b>1.4</b> CATBOOST</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path=""><a href="#catboost-优点"><i class="fa fa-check"></i><b>1.4.1</b> catboost 优点</a></li>
+<li class="chapter" data-level="1.4.2" data-path=""><a href="#catboost缺点"><i class="fa fa-check"></i><b>1.4.2</b> catboost缺点</a></li>
+<li class="chapter" data-level="1.4.3" data-path=""><a href="#与xgboost和lightgbm相比catboost的创新点"><i class="fa fa-check"></i><b>1.4.3</b> 与XGBoost和LightGBM相比CatBoost的创新点</a></li>
+<li class="chapter" data-level="1.4.4" data-path=""><a href="#处理类别特征的方法"><i class="fa fa-check"></i><b>1.4.4</b> 处理类别特征的方法</a></li>
+<li class="chapter" data-level="1.4.5" data-path=""><a href="#基于贪心策略的特征交叉方法"><i class="fa fa-check"></i><b>1.4.5</b> 基于贪心策略的特征交叉方法</a></li>
+<li class="chapter" data-level="1.4.6" data-path=""><a href="#避免预测偏移的-ordered-boosting-方法"><i class="fa fa-check"></i><b>1.4.6</b> 避免预测偏移的 Ordered Boosting 方法。</a></li>
+<li class="chapter" data-level="1.4.7" data-path=""><a href="#使用对称二叉树作为基模型有正则作用且预测极快"><i class="fa fa-check"></i><b>1.4.7</b> 使用对称二叉树作为基模型，有正则作用且预测极快</a></li>
+<li class="chapter" data-level="1.4.8" data-path=""><a href="#catboost-加速计算"><i class="fa fa-check"></i><b>1.4.8</b> catboost 加速计算</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path=""><a href="#ngboost"><i class="fa fa-check"></i><b>1.5</b> NGBOOST</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">梯度提升算法对比</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">梯度提升算法对比</h1>
+<p class="author"><em>高文欣</em></p>
+<p class="date"><em>2022-08-08</em></p>
+</div>
+<div id="梯度提升算法对比总结" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> 梯度提升算法对比总结</h1>
+<div id="gbdt" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> GBDT</h2>
+</div>
+<div id="xgboost" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> XGBOOST</h2>
+</div>
+<div id="lightgbm" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> LightGBM</h2>
+</div>
+<div id="catboost" class="section level2" number="1.4">
+<h2><span class="header-section-number">1.4</span> CATBOOST</h2>
+<blockquote>
+<p>CatBoost是一种基于对称决策树（oblivious trees）为基学习器实现的参数较少、支持类别型变量和高准确性的GBDT框架，主要解决的痛点是高效合理地处理类别型特征，这一点从它的名字中可以看出来，CatBoost是由Categorical和Boosting组成。此外，CatBoost还解决了梯度偏差（Gradient Bias）以及预测偏移（Prediction shift）的问题，从而减少过拟合的发生，进而提高算法的准确性和泛化能力。<a href="https://blog.csdn.net/weixin_49708196/article/details/124018649">csdn</a></p>
+</blockquote>
+<div id="catboost-优点" class="section level3" number="1.4.1">
+<h3><span class="header-section-number">1.4.1</span> catboost 优点</h3>
+<ul>
+<li><p>性能卓越：在性能方面可以匹敌任何先进的机器学习算法</p></li>
+<li><p>鲁棒性/强健性：它减少了对很多超参数调优的需求，并降低了过度拟合的机会，这也使得模型变得更加具有通用性</p></li>
+<li><p>易于使用：提供与 scikit 集成的 Python 接口，以及 R 和命令行界面</p></li>
+<li><p>实用：可以处理类别型、数值型特征</p></li>
+<li><p>可扩展：支持自定义损失函数</p></li>
+<li><p>支持类别型变量，无需对非数值型特征进行预处理</p></li>
+<li><p>快速、可扩展的GPU版本，可以用基于GPU的梯度提升算法实现来训练你的模型，支持多卡并行</p></li>
+<li><p>快速预测，即便应对延时非常苛刻的任务也能够快速高效部署模型</p></li>
+</ul>
+</div>
+<div id="catboost缺点" class="section level3" number="1.4.2">
+<h3><span class="header-section-number">1.4.2</span> catboost缺点</h3>
+<ul>
+<li><p>对于类别型特征的处理需要大量的内存和时间</p></li>
+<li><p>不同随机数的设定对于模型预测结果有一定的影响</p></li>
+</ul>
+</div>
+<div id="与xgboost和lightgbm相比catboost的创新点" class="section level3" number="1.4.3">
+<h3><span class="header-section-number">1.4.3</span> 与XGBoost和LightGBM相比CatBoost的创新点</h3>
+<ul>
+<li><p>嵌入了自动将类别型特征处理为数值型特征的创新算法。首先对categorical features做一些统计,计算某个类别特征（category）出现的频率,之后加上超参数,生成新的数值型特征（numerical features）。</p></li>
+<li><p>Catboost 还使用了组合类别特征，可以利用到特征之间的联系，这极大的丰富了特征维度。</p></li>
+<li><p>采用排序提升的方法对抗训练集中的噪声点，从而避免梯度估计的偏差，进而解决预测偏移的问题。</p></li>
+<li><p>采用了完全对称树作为基模型。</p></li>
+<li><p>采用一种新的算法计算 leaf-values 。</p></li>
+</ul>
+</div>
+<div id="处理类别特征的方法" class="section level3" number="1.4.4">
+<h3><span class="header-section-number">1.4.4</span> 处理类别特征的方法</h3>
+<p>对于类别特征，如果类别数目不多，可以使用onehot编码。否则，很容易造成维度爆炸。catboost 不提倡使用one-hot编码，它设计了一种<strong>基于预测目标统计值</strong>的方法可以将类别特征转化为数值特征。颇有均值编码的思想。</p>
+<p>CatBoost 使用一个更有效的策略，一方面可以减少过拟合，另一方面使用全部数据来训练。对数据集先随机排序，对于每个样本的该类别特征中的某个取值，转换为数值型时都是基于该样本之前的类别label value取均值，同时加入了优先级（先验值）的权重系数。
+假设 <span class="math inline">\(\sigma=\left(\sigma_{1}, \sigma_{2}, \cdots, \sigma_{\mathrm{n}}\right)\)</span> 是随机排列序列，则有</p>
+<p><span class="math display">\[
+\mathrm{x}_{\sigma_{\mathrm{p}}, \mathrm{k}}=\frac{\sum_{\mathrm{j}=1}^{\mathrm{p}-1}\left[\mathrm{x}_{\sigma_{\mathrm{j}}, \mathrm{k}}=\mathrm{x}_{\sigma_{\mathrm{p}}, \mathrm{k}}\right] * \mathrm{Y}_{\sigma_{\mathrm{j}}}+\alpha * \mathrm{P}}{\sum_{\mathrm{j}=1}^{\mathrm{p}-1}\left[\mathrm{x}_{\sigma_{\mathrm{j}}, \mathrm{k}}=\mathrm{x}_{\sigma_{\mathrm{p}}, \mathrm{k}}\right]+\alpha}
+\]</span>
+<span class="math inline">\([\cdot]\)</span> 代表指示函数， <span class="math inline">\(\mathrm{P}\)</span> 就代表先验，对应回归任务，计算标签的平均值作为先验值；对于二分类任务，将正类的出现概率作为先验值。 <span class="math inline">\(\alpha\)</span> 代表优先级的权重系数，这个是为防止低频次的特征带来的影响所用的平滑操作，如果不使用这个操作的话，当对于某一个特征只有一个样本的时候，其特征编码就为 1 ，会有过拟合的风险。
+这种方法称为 Ordered Target Statistics 数值编码方法。可以有效解决预测漂移的问题，关于预测漂移
+可以看<a href="https://blog.csdn.net/qq_42003997/article/details/104400825">参考</a></p>
+</div>
+<div id="基于贪心策略的特征交叉方法" class="section level3" number="1.4.5">
+<h3><span class="header-section-number">1.4.5</span> 基于贪心策略的特征交叉方法</h3>
+<p>使用Ordered Target Statistics 方法将类别特征转化成为数值特征以后，会影响到特征交叉，因为数值特征无法有效地进行交叉。为了有 效地利用特征交叉，CatBoost 在将类别特征转换为数值编码的同时，会自动生成交叉特征。但如果让全部的类别特征之间都进行交叉， 两两交叉，三三交叉，四四交叉，这个复杂度是指数级的，特征维度一定会爆炸。</p>
+<p>CatBoost使用一种贪心的策略来进行特征交叉。生成tree的第一次分裂，CatBoost不使用任何交叉特征。在后面的分裂中，CatBoost会住 用生成tree所用到的全部原始特征和交叉特征跟数据集中的全部类别特征进行交叉。
+使用参数“max_ctr_complexity”控制特征交叉的最大个数。</p>
+</div>
+<div id="避免预测偏移的-ordered-boosting-方法" class="section level3" number="1.4.6">
+<h3><span class="header-section-number">1.4.6</span> 避免预测偏移的 Ordered Boosting 方法。</h3>
+<p>使用XGBoost或者LightGBM做模型时，我们可能经常会发现模型在训练集上拟合的很好，train_auc甚至达到了1.0, 但是在验证集上却差了很多, val_auc 可能只有0.7。这当然有可能是因为tree的数量太多了，或者是每棵tree的leaves太多了，总之模型太复杂了造成了过拟合。
+但也有一些XGBoost和LightGBM自身算法的缺陷因素。我们知道LightGBM在训练下一棵tree的时候，需要计算前面这些tree构成的加法模型在所有样本上的一阶梯度和二阶梯度(Loss对模型预测结果的导数)，然后用这些梯度来决定下一棵树的结构和叶子节点取值。
+但是我们计算的这些一阶梯度和二阶梯度值是问题的。前面的这些tree都是在这些样本上训练的，现在我们又在这些样本上估计模型预测结果的一阶和二阶梯度。我们应该换一些新的样本才更合理。但是我们从哪里找这些新的样本呢?</p>
+<p>CatBoost 的作者故伎重演。先将样本随机打乱，然后每个样本只使用排序在它前面的样本来训练模型。用这样的模型来估计这个样本预 测结果的一阶和二阶梯度。然后用这些梯度构建一棵tree的结构，最终tree的每个叶子节点的取值，是使用全体样本进行计算的。
+这就是Ordered Boosting的主要思想。可以有效地减少梯度估计的误差，缓解预测偏移。但是会增加较多的计算量，影响训练速度。
+在定义CatBoost模型时，我们可以用’boosting_type’这个参数来设置是使用Ordered Boosting 还是 LightGBM那样的 Plain Boosting。如 果不显式设置，CatBoost会根据样本和特征数量自己决定。</p>
+<p>构建一颗树有两个阶段：第一，选择树结构；第二，在树结构固定后计算叶节点的值。CatBoost在第二阶段采用传统的GBDT方法 执行，而在第一阶段采用修正的方法一即梯度步长的无偏估计。
+令 <span class="math inline">\(\mathrm{F}^{\mathrm{i}}\)</span> 为前 <span class="math inline">\(\mathrm{i}\)</span> 棵树的结构模型 (已建好)，为了使 <span class="math inline">\(\mathrm{g}^{\mathrm{i}}\left(\mathrm{X}_{\mathrm{k}}, \mathrm{Y}_{\mathrm{k}}\right)\)</span> 是关于模型 <span class="math inline">\(\mathrm{F}^{\mathrm{i}}\)</span> 的无偏梯度，需要在训练的时候不使用样本 <span class="math inline">\(\mathrm{k}\)</span> 。 初始化模型 <span class="math inline">\(\mathrm{M}_{\mathrm{k}}\)</span> 。其次对于每一棵树，遍历每一个样本，对前 <span class="math inline">\(\mathrm{k}-1\)</span> 个样本，依次计算 Loss 的梯度 <span class="math inline">\(\mathrm{g}_{\mathrm{i}}\)</span> ；再次将前 <span class="math inline">\(\mathrm{k}-1\)</span> 个样本 的 <span class="math inline">\(\mathrm{g}_{\mathrm{i}}\)</span> 和 <span class="math inline">\(\mathrm{X}_{\mathrm{j}}(\mathrm{j}=1, \cdots, \mathrm{k}-1)\)</span> 来构建模型 <span class="math inline">\(\mathrm{M}\)</span> ；最后，对每一个样本 <span class="math inline">\(\mathrm{X}_{\mathrm{k}}\)</span> ，用 <span class="math inline">\(\mathrm{M}\)</span> 来修正初始化的 <span class="math inline">\(\mathrm{M}_{\mathrm{k}}\)</span> ，这样就可以得到一个分 隔的模型 <span class="math inline">\(\mathrm{M}_{\mathrm{k}}\)</span> (并且这个模型不需要这个样本用梯度估计来更新）。重复上述操作，就可以得到每一个样本 <span class="math inline">\(\mathrm{X}\)</span> 的分隔模型 <span class="math inline">\(\mathrm{M}\)</span> 。由 此可见, 每一个 <span class="math inline">\(\mathrm{M}_{\mathrm{k}}\)</span> 都共享相同的树结构。
+在CatBoost中，构建样本集的 s 个随机序列来增强算法的鲁棒性 <span class="math inline">\(Q\)</span> 。用不同的序列来训练不同的模型，这将不会导致过拟合。</p>
+</div>
+<div id="使用对称二叉树作为基模型有正则作用且预测极快" class="section level3" number="1.4.7">
+<h3><span class="header-section-number">1.4.7</span> 使用对称二叉树作为基模型，有正则作用且预测极快</h3>
+<p>XGBoost和LightGBM采用的基模型是普通的二叉树，但是CatBoost采用的是对称的二叉树。
+这种对树结构上的约束有一定的正则作用。更为重要的是，它可以让CatBoost模型的推断过程极快。
+对于CatBoost的tree的预测过程来说，每个特征的分裂都是独立的，不分先后顺序，多个样本可以一起预测。
+<img src="fig/oblivious_tree.png" /></p>
+</div>
+<div id="catboost-加速计算" class="section level3" number="1.4.8">
+<h3><span class="header-section-number">1.4.8</span> catboost 加速计算</h3>
+<div id="快速评分" class="section level4" number="1.4.8.1">
+<h4><span class="header-section-number">1.4.8.1</span> 快速评分</h4>
+<p>CatBoost使用对称树 (oblivious trees) 作为基预测器。在这类树中，相同的分割准则在树的整个一层上使用。这种树是平衡的，不太容 易过拟合。梯度提升对称树被成功地用于各种学习任务中。在对称树中，每个叶子节点的索引可以被编码为长度等于树深度的二进制向 量。这在CatBoost模型评估器中得到了广泛的应用：我们首先将所有浮点特征、统计信息和独热编码特征进行二值化，然后使用二进制特 征来计算模型预测值。
+#### 基于GPU实现快速训练
+密集的数值特征: 对于任何GBDT算法而言，最大的难点之一就是搜索最佳分割。尤其是对于密集的数值特征数据集来说，该步骤是建立 决策树时的主要计算负担。CatBoost使用oblivious 决策树作为基模型，并将特征离散化到固定数量的箱子中以减少内存使用。就GPU内 存使用而言，CatBoost至少与LightGBM一样有效。主要改进之处就是利用了一种不依赖于原子操作的直方图计算方法。
+类别型特征：CatBoost实现了多种处理类别型特征的方法，并使用完美哈希来存储类别型特征的值，以减少内存使用。由于GPU内存的 限制，在CPU RAM中存储按位压缩的完美哈希，以及要求的数据流、重叠计算和内存等操作。通过哈希来分组观察。在每个组中，我们 需要计算一些统计量的前缀和。该统计量的计算使用分段扫描GPU图元实现。
+多GPU支持：CatBoost中的GPU实现可支持多个GPU。分布式树学习可以通过数据或特征进行并行化。CatBoost采用多个学习数据集排 列的计算方案，在训练期间计算类别型特征的统计数据。</p>
+</div>
+</div>
+</div>
+<div id="ngboost" class="section level2" number="1.5">
+<h2><span class="header-section-number">1.5</span> NGBOOST</h2>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+},
+"search": false
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
